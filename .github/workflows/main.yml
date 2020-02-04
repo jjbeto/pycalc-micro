@@ -1,19 +1,12 @@
 name: CI/CD 🔨
 
-on:
-  push:
-    branches:
-      - source
-  schedule:
-    - cron: '20 13 * * *'
+on: [push]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-        with:
-          fetch-depth: 1
+      - uses: actions/checkout@v2
       - name: Run Makefile
         env:
           TOKEN: ${{ secrets.TOKEN }}
