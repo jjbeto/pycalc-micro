@@ -7,8 +7,9 @@ services:
       context: .
       args:
         - MICROSERVICE=evaluate
-    image: ${DOCKER_REPO}-evaluate:latest
+    image: jjbeto/pycalc-micro-evaluate:latest
     ports:
       - 5000:5000
     environment:
       ENV: DEV
+      MICROSERVICE: evaluate

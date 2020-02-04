@@ -21,7 +21,7 @@ clean-build:
 .PHONY: build
 
 build: clean-build
-	bash -c "source docker.env && docker-compose -p $(DOCKER_REPO) build"
+	docker-compose build
 
 
 ########################################################################################################################
@@ -30,37 +30,28 @@ build: clean-build
 .PHONY: start
 
 start: build
-	bash -c "source docker.env && docker-compose -p $(DOCKER_REPO) up -d"
-
-
-########################################################################################################################
-######## Stop running containers #######################################################################################
-########################################################################################################################
-.PHONY: stop
-
-stop:
-	docker-compose -p $(DOCKER_REPO) stop
+	docker-compose up -d
 
 
 ########################################################################################################################
 ######## Stop and remove containers ####################################################################################
 ########################################################################################################################
-.PHONY: remove
+.PHONY: stop
 
-remove: stop
-	docker-compose -p $(DOCKER_REPO) rm --force -v
+stop:
+	docker-compose down -v
 
 
 ########################################################################################################################
 ######## Check logs ####################################################################################################
 ########################################################################################################################
-.PHONY: check-logs check-logs-evaluate
+.PHONY: logs logs-evaluate
 
-check-logs:
-	docker-compose -p $(DOCKER_REPO) logs --follow --tail=10
+logs:
+	docker-compose logs --follow --tail=10
 
-check-logs-evaluate:
-	docker-compose -p $(DOCKER_REPO) logs --follow --tail=10 pycalc-evaluate
+logs-evaluate:
+	docker-compose logs --follow --tail=10 pycalc-evaluate
 
 
 ########################################################################################################################
@@ -78,7 +69,7 @@ clean: remove system-prune
 ######## Test (Unit and integration) ###################################################################################
 ## TODO good idea: https://github.com/anirbanroydas/ci-testing-python/blob/master/tests/unit/test_unit_identidock.py
 ########################################################################################################################
-.PHONY: test test-unit test-component test-contract test-integration test-e2e test-system test-ui-acceptance test-functional
+.PHONY: test test-unit test-integration
 
 test-unit:
 	bash -c "tests/test.sh evaluate unit        $(UNIT_TESTING_NAME) $(UNIT_TEST_DIR) $(PROJECT_ROOT_DIR)"
@@ -100,16 +91,14 @@ help:
 	@echo "    clean-build"
 	@echo "        Remove build artifacts."
 	@echo "    build"
-	@echo "        Build Project Docker Container"
+	@echo "        Build Project in Docker Container"
 	@echo "    start"
-	@echo "        Start and Run Project in Docker Container"
+	@echo "        Build and Run Project in Docker Container"
 	@echo "    stop"
-	@echo "        Stop Docker Container"
-	@echo "    remove"
-	@echo "        Remove Docker Container"
-	@echo "    check-logs"
+	@echo "        Stop and Remove Docker Container"
+	@echo "    logs"
 	@echo "        Alias for check-logs-dev"
-	@echo "    check-logs-evaluate"
+	@echo "    logs-evaluate"
 	@echo "        Check logs of Docker Container jjbeto/pycalc-micro-evaluate"
 	@echo "    clean"
 	@echo "        Clean the Docker Container Env"
