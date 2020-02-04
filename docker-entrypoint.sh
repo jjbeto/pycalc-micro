@@ -4,7 +4,6 @@ set -e
 if [ "$ENV" = "DEV" ]; then
 	echo "Running Development Application"
 	export FLASK_ENV=development
-	pip install --no-deps -e .
   python $MICROSERVICE/main.py
 
 elif [ "$ENV" = "UNIT_TEST" ]; then
