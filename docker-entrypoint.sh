@@ -8,6 +8,7 @@ if [ "$ENV" = "DEV" ]; then
 
 elif [ "$ENV" = "UNIT_TEST" ]; then
 	echo "Running Unit Tests"
+	pip install -r requirements/requirements-dev.txt
 	exec pytest -v -s --cov=./tests tests/unit
 
 elif [ "$ENV" = "INTEGRATION_TEST" ]; then

@@ -26,8 +26,7 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # install requirements
 COPY requirements ./requirements
-RUN  pip install -r ./requirements/requirements-main.txt && \
-     pip install -r ./requirements/requirements-dev.txt
+RUN  pip install -r ./requirements/requirements-main.txt
 
 # Flask Port
 EXPOSE 5000

@@ -1,3 +1,8 @@
+Flask
+request
 pytest
 pytest-flask
-request
+pytest-cov
+pytest-pep8
+coverage
+attrs

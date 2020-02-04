@@ -10,6 +10,7 @@ clean-pyc:
 	find . | grep -E '(__pycache__)' | xargs rm -rf
 
 clean-build:
+	@echo "🧹 Cleaning old build"
 	rm --force --recursive build/     || true
 	rm --force --recursive dist/      || true
 	rm --force --recursive *.egg-info || true
@@ -21,6 +22,7 @@ clean-build:
 .PHONY: build
 
 build: clean-build
+	@echo "🔨 Building images"
 	docker-compose build
 
 
@@ -60,24 +62,28 @@ logs-evaluate:
 .PHONY: system-prune clean
 
 system-prune:
+	@echo "🛎 System prune"
 	echo "y" | docker system prune
 
-clean: remove system-prune
+clean: stop system-prune
 
 
 ########################################################################################################################
 ######## Test (Unit and integration) ###################################################################################
 ## TODO good idea: https://github.com/anirbanroydas/ci-testing-python/blob/master/tests/unit/test_unit_identidock.py
 ########################################################################################################################
-.PHONY: test test-unit test-integration
+.PHONY: test unit-test test-integration
 
-test-unit:
-	bash -c "tests/test.sh evaluate unit        $(UNIT_TESTING_NAME) $(UNIT_TEST_DIR) $(PROJECT_ROOT_DIR)"
+unit-test:
+	@echo "🍜 Running unit-tests"
+	chmod +x tests/test.sh
+	bash -c tests/test.sh evaluate unit        evaluate $(UNIT_TEST_DIR) $(PROJECT_ROOT_DIR)
 
-test-integration:
+integration-test:
+	@echo "🍜 Running integration-tests"
 	bash -c "tests/test.sh evaluate integration $(INTEGRATION_TESTING_NAME) $(INTEGRATION_TEST_DIR) $(PROJECT_ROOT_DIR)"
 
-test: system-prune test-unit test-integration
+test: system-prune unit-test test-integration
 
 
 ########################################################################################################################
