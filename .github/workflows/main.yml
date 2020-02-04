@@ -1,4 +1,4 @@
-name: CI/CD 🔨
+name: CICD
 
 on: [push]
 
