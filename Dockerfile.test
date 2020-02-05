@@ -32,5 +32,5 @@ COPY shared     ./shared
 
 # run tests
 COPY tests      ./tests
-RUN  coverage run --source=. -m pytest tests
+RUN  coverage run --source=. -m pytest tests/unit
 RUN  coverage report -m

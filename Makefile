@@ -78,11 +78,13 @@ unit-test:
 	@echo "🍜 Running unit-tests"
 	docker build -t jjbeto/pycalc-micro-unit-test -f Dockerfile.test .
 
-integration-test:
+integration-test: start
 	@echo "🍜 Running integration-tests"
-	bash -c "tests/test.sh evaluate integration $(INTEGRATION_TESTING_NAME) $(INTEGRATION_TEST_DIR) $(PROJECT_ROOT_DIR)"
+	@echo "🍜 testing service 'evaluate'"
+	cd tests/integration && chmod +x test_evaluate.sh && ./test_evaluate.sh -u http://localhost:5000
 
-test: system-prune unit-test test-integration
+
+test: unit-test integration-test
 
 
 ########################################################################################################################
@@ -109,9 +111,9 @@ help:
 	@echo "        Clean the Docker Container Env"
 	@echo "    system-prune"
 	@echo "        Clean Environment: Docker Containers, volumes, images which are dangling"
-	@echo "    test-unit"
+	@echo "    unit-test"
 	@echo "        Perform Unit tests in Docker Container"
-	@echo "    test-integration"
+	@echo "    integration-test"
 	@echo "        Perform Integration tests in Docker Container"
 	@echo "    test"
 	@echo "        Test Everything (unit and Integration)"
