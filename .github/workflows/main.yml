@@ -31,10 +31,11 @@ jobs:
           coverage run --source=. -m pytest tests/unit
           COVERALLS_REPO_TOKEN=${{ secrets.COVERALLS_REPO_TOKEN }} coveralls
 
-      # Integration tests
-      - name: Run Makefile
+      # Build & Run integration tests
+      - name: Make build and integration tests
         run: make integration-test
 
-      # Build Image
-      - name: Run Makefile
-        run: make build
+      - name: Publish to DockerHub
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push jjbeto/pycalc-micro-evaluate
