@@ -1,8 +1,4 @@
 Flask
 request
 pytest
-pytest-flask
-pytest-cov
-pytest-pep8
 coverage
-attrs

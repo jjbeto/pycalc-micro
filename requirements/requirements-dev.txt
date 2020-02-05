@@ -4,11 +4,9 @@
 #
 #    pip-compile requirements-dev.in
 #
-apipkg==1.5               # via execnet
-attrs==19.3.0
+attrs==19.3.0             # via pytest
 click==7.0                # via flask
 coverage==5.0.3
-execnet==1.7.1            # via pytest-cache
 flask==1.1.1
 get==2019.4.13            # via request
 importlib-metadata==1.5.0  # via pluggy, pytest
@@ -17,22 +15,17 @@ jinja2==2.11.1            # via flask
 markupsafe==1.1.1         # via jinja2
 more-itertools==8.2.0     # via pytest
 packaging==20.1           # via pytest
-pep8==1.7.1               # via pytest-pep8
 pluggy==0.13.1            # via pytest
 post==2019.4.13           # via request
 public==2019.4.13         # via query-string
 py==1.8.1                 # via pytest
 pyparsing==2.4.6          # via packaging
-pytest-cache==1.0         # via pytest-pep8
-pytest-cov==2.8.1
-pytest-flask==0.10.0
-pytest-pep8==1.0.6
 pytest==5.3.5
 query-string==2019.4.13   # via get
 request==2019.4.13
 six==1.14.0               # via packaging
 wcwidth==0.1.8            # via pytest
-werkzeug==0.16.1          # via flask, pytest-flask
+werkzeug==0.16.1          # via flask
 zipp==2.1.0               # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:

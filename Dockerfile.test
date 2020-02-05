@@ -1,0 +1,36 @@
+# some tips from https://pythonspeed.com/articles/pipenv-docker/
+
+FROM python:alpine
+
+MAINTAINER Beto Fonseca <jjbeto@gmail.com>
+
+WORKDIR /microservice
+
+RUN set -e && \
+	apk add --no-cache --virtual .build-deps \
+		gcc \
+		libc-dev \
+		linux-headers \
+    && \
+    pip install --upgrade pip && \
+    pip install virtualenv && \
+    apk del .build-deps
+
+# setup virtual env for all next python/pip commands
+ENV VIRTUAL_ENV=/opt/venv
+RUN python -m virtualenv --python=/usr/local/bin/python $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# install requirements
+COPY requirements ./requirements
+RUN  pip install -r ./requirements/requirements-dev.txt
+
+# copy source code
+ENV PYTHONPATH=/microservice
+COPY evaluate   ./evaluate
+COPY shared     ./shared
+
+# run tests
+COPY tests      ./tests
+RUN  coverage run --source=. -m pytest tests
+RUN  coverage report -m

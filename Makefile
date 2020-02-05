@@ -76,8 +76,7 @@ clean: stop system-prune
 
 unit-test:
 	@echo "🍜 Running unit-tests"
-	chmod +x tests/test.sh
-	bash -c tests/test.sh evaluate unit        evaluate $(UNIT_TEST_DIR) $(PROJECT_ROOT_DIR)
+	docker build -t jjbeto/pycalc-micro-unit-test -f Dockerfile.test .
 
 integration-test:
 	@echo "🍜 Running integration-tests"
