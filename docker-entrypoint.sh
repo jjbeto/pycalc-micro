@@ -6,15 +6,6 @@ if [ "$ENV" = "DEV" ]; then
 	export FLASK_ENV=development
   python $MICROSERVICE/main.py
 
-elif [ "$ENV" = "UNIT_TEST" ]; then
-	echo "Running Unit Tests"
-	pip install -r requirements/requirements-dev.txt
-	exec pytest -v -s --cov=./tests tests/unit
-
-elif [ "$ENV" = "INTEGRATION_TEST" ]; then
-	echo "Running Integration Tests"
-	exec pytest -v -s --cov=./tests tests/integration
-
 elif [ "$ENV" = "PROD" ]; then
 	echo "Running Production Application"
 	python $MICROSERVICE/main.py
