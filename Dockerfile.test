@@ -27,11 +27,8 @@ RUN  pip install -r ./requirements/requirements-dev.txt
 
 # copy source code
 ENV PYTHONPATH=/microservice
-COPY evaluate   ./evaluate
-COPY add        ./add
-COPY shared     ./shared
+COPY . .
 
 # run tests
-COPY tests      ./tests
 RUN  coverage run --source=. -m pytest tests/unit
 RUN  coverage report -m
