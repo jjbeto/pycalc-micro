@@ -27,18 +27,13 @@ def add(json):
     if not json.get('t') or json.get('t') != 'add':
         raise InvalidOperationError('Add operation was expected')
 
-    left = evaluation(json, 'l')
-    if not check_type(left, 'num'):
-        raise InvalidOperationError(f'Cannot process operation for node {left}')
-
-    right = evaluation(json, 'r')
-    if not check_type(right, 'num'):
-        raise InvalidOperationError(f'Cannot process operation for node {right}')
+    left = __evaluation(json, 'l')
+    right = __evaluation(json, 'r')
 
     return get_number(left.get('v') + right.get('v'))
 
 
-def evaluation(json, side):
+def __evaluation(json, side):
     """
     if current operation is on a side, operate it from local, otherwise call remote evaluation
     """
@@ -46,4 +41,8 @@ def evaluation(json, side):
         raise BadRequestError()
 
     node = json['v'].get(side)
-    return add(node) if check_type(node, 'add') else get_evaluation(node)
+    result = add(node) if check_type(node, 'add') else get_evaluation(node)
+    if not check_type(result, 'num'):
+        raise InvalidOperationError(f'Cannot process operation for node {result}')
+
+    return result

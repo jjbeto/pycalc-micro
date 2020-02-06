@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 # main.py
 #
 # Copyright 2020 Jose Jouberto Fonseca Lopes.
