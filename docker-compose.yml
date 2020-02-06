@@ -21,3 +21,23 @@ services:
     environment:
       ENV: DEV
       MICROSERVICE: add
+
+  pycalc-sub:
+    build:
+      context: .
+    image: jjbeto/pycalc-micro-sub:latest
+    ports:
+      - 5002:5000
+    environment:
+      ENV: DEV
+      MICROSERVICE: sub
+
+  pycalc-mul:
+    build:
+      context: .
+    image: jjbeto/pycalc-micro-mul:latest
+    ports:
+      - 5003:5000
+    environment:
+      ENV: DEV
+      MICROSERVICE: mul
