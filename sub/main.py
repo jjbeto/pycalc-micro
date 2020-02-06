@@ -46,7 +46,7 @@ def create_app(test_config=None):
         operation = extract_body(request.get_data())
         result = sub(operation)
 
-        return msgpack.packb(result, encoding='utf-8'), 200, {'Content-Type': 'application/msgpack'}
+        return msgpack.packb(result), 200, {'Content-Type': 'application/msgpack'}
 
     return application
 
