@@ -41,3 +41,13 @@ services:
     environment:
       ENV: DEV
       MICROSERVICE: mul
+
+  pycalc-div:
+    build:
+      context: .
+    image: jjbeto/pycalc-micro-div:latest
+    ports:
+      - 5004:5000
+    environment:
+      ENV: DEV
+      MICROSERVICE: div
