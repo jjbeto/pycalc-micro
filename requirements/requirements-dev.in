@@ -1,4 +1,5 @@
 Flask
-request
+requests
+msgpack
 pytest
 coverage

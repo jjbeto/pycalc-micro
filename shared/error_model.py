@@ -44,6 +44,33 @@ class TextPlainRequestError(ApiError):
         super().__init__(406, 'Invalid request type, only text/plain is accepted')
 
 
+class MsgpackRequestError(ApiError):
+    """
+    406 Invalid request type, only application/msgpack is accepted
+    """
+
+    def __init__(self):
+        super().__init__(406, 'Invalid request type, only application/msgpack is accepted')
+
+
+class MsgpackInvalidError(ApiError):
+    """
+    400 BBad Request: not possible to decode message
+    """
+
+    def __init__(self):
+        super().__init__(400, 'Bad Request: not possible to decode message')
+
+
+class BadRequestError(ApiError):
+    """
+    400 BBad Request: not possible to decode message
+    """
+
+    def __init__(self):
+        super().__init__(400, 'Bad Request: message is not correct')
+
+
 class RequestBodyMandatoryError(ApiError):
     """
     400 Bad Request - request body is mandatory
@@ -51,3 +78,12 @@ class RequestBodyMandatoryError(ApiError):
 
     def __init__(self):
         super().__init__(406, 'Invalid request type, only text/plain is accepted')
+
+
+class InvalidOperationError(ApiError):
+    """
+    500 Internal Error - operation is invalid
+    """
+
+    def __init__(self, msg=None):
+        super().__init__(406, f'Internal Error: {msg}' if msg else 'Internal Error: operation is invalid')

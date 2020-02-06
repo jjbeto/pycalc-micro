@@ -28,6 +28,7 @@ RUN  pip install -r ./requirements/requirements-dev.txt
 # copy source code
 ENV PYTHONPATH=/microservice
 COPY evaluate   ./evaluate
+COPY add        ./add
 COPY shared     ./shared
 
 # run tests

@@ -4,9 +4,6 @@ FROM python:alpine
 
 MAINTAINER Beto Fonseca <jjbeto@gmail.com>
 
-# If MICROSERVICE is not passed as a build arg, go with evaluate
-ARG MICROSERVICE=evaluate
-
 WORKDIR /microservice
 
 RUN set -e && \
@@ -32,8 +29,8 @@ RUN  pip install -r ./requirements/requirements-main.txt
 EXPOSE 5000
 
 ENV PYTHONPATH=/microservice
-COPY ${MICROSERVICE}    ./${MICROSERVICE}
-COPY shared             ./shared
+COPY $MICROSERVICE  ./$MICROSERVICE
+COPY shared         ./shared
 
 COPY docker-entrypoint.sh .
 RUN  chmod +x docker-entrypoint.sh

@@ -5,11 +5,19 @@ services:
   pycalc-evaluate:
     build:
       context: .
-      args:
-        - MICROSERVICE=evaluate
     image: jjbeto/pycalc-micro-evaluate:latest
     ports:
       - 5000:5000
     environment:
       ENV: DEV
       MICROSERVICE: evaluate
+
+  pycalc-add:
+    build:
+      context: .
+    image: jjbeto/pycalc-micro-add:latest
+    ports:
+      - 5001:5000
+    environment:
+      ENV: DEV
+      MICROSERVICE: add

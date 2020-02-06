@@ -17,6 +17,6 @@ setup(
     long_description=readme,
     packages=find_packages(),
     zip_safe=False,
-    install_requires=['requests', 'flask'],
+    install_requires=['requests', 'flask', 'msgpack'],
     extras_require={"test": ["pytest==3.0.6", "coverage"]},
 )

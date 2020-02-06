@@ -46,3 +46,10 @@ def handle_unexpected_error(error):
         }
     }
     return jsonify(response), status_code
+
+
+def initialize_error_handlers(application):
+    """
+    Initialize error handlers
+    """
+    application.register_blueprint(errors)

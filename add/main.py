@@ -18,11 +18,13 @@
 
 import re
 
+import msgpack
 from flask import Flask, request
 
-from evaluate.eval_operation import evaluate
+from add.add_operation import add
+from shared.communicator import extract_body
 from shared.error_handler import initialize_error_handlers
-from shared.error_model import TextPlainRequestError, RequestBodyMandatoryError
+from shared.error_model import MsgpackRequestError
 
 _REGEX_EXTRACT_BODY = re.compile(r'^b\'(.*)?\'$')
 
@@ -32,34 +34,22 @@ def create_app(test_config=None):
     Create an app by initializing components.
     """
     application = Flask(__name__)
-    application.config.from_mapping(
-        # a default secret that should be overridden by instance config
-        SECRET_KEY="master-key",
-    )
     if test_config:
         application.config.update(test_config)
 
     initialize_error_handlers(application)
 
     @application.route('/', methods=['POST'])
-    def post_evaluate():
-        if request.content_type != 'text/plain':
-            raise TextPlainRequestError()
+    def post_add():
+        if request.content_type != 'application/msgpack':
+            raise MsgpackRequestError()
 
-        body = extract_body(request.get_data())
-        evaluation = evaluate(body)
-        return str(evaluation), 200, {'Content-Type': 'text/plain; charset=utf-8'}
+        operation = extract_body(request.get_data())
+        result = add(operation)
+
+        return msgpack.packb(result, encoding='utf-8'), 200, {'Content-Type': 'application/msgpack'}
 
     return application
-
-
-def extract_body(data):
-    raw_body = str(data)
-    groups = _REGEX_EXTRACT_BODY.match(raw_body).groups()
-    if len(groups):
-        return groups[0]
-    else:
-        raise RequestBodyMandatoryError()
 
 
 if __name__ == '__main__':
